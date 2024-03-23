@@ -11,7 +11,7 @@ const Table = styled.div`
 
 const TableHeader = styled.header`
   display: grid;
-  grid-template-columns: 0.6fr 1.8fr 2.2fr 0.2fr;
+  grid-template-columns: 0.6fr 1.8fr 1.2fr 0.5fr 0.2fr;
   column-gap: 2.4rem;
   align-items: center;
   text-align: center;
@@ -25,13 +25,14 @@ const TableHeader = styled.header`
   padding: 1.6rem 2.4rem;
 `;
 
-function ScoutTable({ playersData, player, setPlayersData }) {
+function ScoutTable({ playersData, setPlayersData, expChange }) {
   return (
     <Table role="table">
       <TableHeader role="row">
         <div>Время</div>
         <div>Ник</div>
         <div>Опыт</div>
+        <div>Изминение опыта</div>
         <div>Удалить строку</div>
       </TableHeader>
       {playersData.map((player) => (
@@ -40,6 +41,7 @@ function ScoutTable({ playersData, player, setPlayersData }) {
           player={player}
           playersData={playersData}
           setPlayersData={setPlayersData}
+          expChange={expChange}
         />
       ))}
     </Table>

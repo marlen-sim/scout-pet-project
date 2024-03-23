@@ -1,9 +1,10 @@
 import styled from "styled-components";
 import Button from "./Button";
+import { useEffect, useRef } from "react";
 
 const TableRow = styled.div`
   display: grid;
-  grid-template-columns: 0.6fr 1.8fr 2.2fr 0.2fr;
+  grid-template-columns: 0.6fr 1.8fr 1.2fr 0.5fr 0.2fr;
   column-gap: 2.4rem;
   align-items: center;
   padding: 1.4rem 2.4rem;
@@ -16,9 +17,9 @@ const TableRow = styled.div`
 
 export default function PlayerInfo({
   player,
-  onDeletePlayerInfo,
   playersData,
   setPlayersData,
+  expChange,
 }) {
   function handleDeletePlayerInfo() {
     const filteredData = playersData.filter(
@@ -27,6 +28,8 @@ export default function PlayerInfo({
     setPlayersData(filteredData);
   }
 
+  const expRef = useRef(expChange);
+
   return (
     <TableRow>
       <span>
@@ -34,6 +37,7 @@ export default function PlayerInfo({
       </span>
       <span>{player.nickname}</span>
       <span>{player.heroExp}</span>
+      <span>{expRef.current}</span>
       <span>
         <Button onClick={handleDeletePlayerInfo}>X</Button>
       </span>

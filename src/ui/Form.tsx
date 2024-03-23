@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import Heading from "./Heading";
 import Button from "./Button";
+import { useEffect, useState } from "react";
 
 const StyledForm = styled.form`
   background-color: #52525b;
@@ -25,43 +26,68 @@ const StyledInput = styled.input`
 `;
 
 interface FormProps {
-  onAddPlayer: (player: {
-    timeNow: string;
-    nickname: string;
-    heroExp: string;
-    coords: number | string;
-  }) => void;
-  nickname: string;
-  heroExp: string;
+  players: [];
+  setPlayers: React.Dispatch<React.SetStateAction<object>>;
+  setPlayersData: React.Dispatch<React.SetStateAction<object>>;
 }
 
 export default function Form({
-  onAddPlayer,
-  nickname,
-  heroExp,
-  setNickname,
-  setExp,
+  players,
+  setPlayers,
+  setPlayersData,
+  setExpChange,
 }: FormProps) {
-  const date = new Date();
-  const timeNow = date.toLocaleTimeString();
+  const [nickname, setNickname] = useState("");
+  const [heroExp, setExp] = useState(null);
+  const [savedNickname, setSavedNickname] = useState();
+
+  const timeNow = new Date().toLocaleTimeString();
+
+  const player = {
+    timeNow,
+    nickname,
+    heroExp,
+    coords: "",
+  };
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
     if (!nickname || !heroExp) return;
 
-    const newPlayer = {
-      timeNow,
-      nickname,
-      heroExp,
-      coords: "",
-    };
-
-    onAddPlayer(newPlayer);
-
+    handleAddPlayer(player);
+    setSavedNickname(nickname);
     setNickname("");
     setExp(null);
   }
+
+  interface playerProps {
+    timeNow: string;
+    nickname: string;
+    heroExp: number;
+    coords: string;
+  }
+
+  function handleAddPlayer(player: playerProps) {
+    setPlayers((players) => [...(players as []), player]);
+    setPlayersData((players) => [...(players as []), player]);
+  }
+
+  useEffect(
+    function () {
+      const filteredPlayers = players.filter(
+        (obj) => obj?.nickname === savedNickname
+      );
+      if (filteredPlayers.length < 2) return;
+      const heroExpChage =
+        filteredPlayers[filteredPlayers.length - 1]?.heroExp -
+        filteredPlayers[filteredPlayers.length - 2]?.heroExp;
+
+      setExpChange(heroExpChage);
+    },
+    [players, nickname]
+  );
+
   return (
     <StyledForm className="form" onSubmit={handleSubmit}>
       <Heading as="h2">Данные о герое</Heading>

@@ -13,13 +13,7 @@ export default function Homepage() {
     playerData,
     "playersData"
   );
-  const [nickname, setNickname] = useState("");
-  const [heroExp, setExp] = useState(null);
-
-  function handleAddPlayer(player: { nickname: string; heroExp: number }) {
-    setPlayers((players) => [...players, player]);
-    setPlayersData((playersData) => [...playersData, player]);
-  }
+  const [expChange, setExpChange] = useState();
 
   function handleDeleteTAbleData() {
     setPlayersData([]);
@@ -27,11 +21,10 @@ export default function Homepage() {
   return (
     <>
       <Form
-        onAddPlayer={handleAddPlayer}
-        nickname={nickname}
-        setNickname={setNickname}
-        heroExp={heroExp}
-        setExp={setExp}
+        players={players}
+        setPlayers={setPlayers}
+        setPlayersData={setPlayersData}
+        setExpChange={setExpChange}
       />
       {playersData.length > 0 ? (
         <>
@@ -39,6 +32,7 @@ export default function Homepage() {
             <Button onClick={handleDeleteTAbleData}>Очитсить таблицу</Button>
           </span>
           <ScoutTable
+            expChange={expChange}
             playersData={playersData}
             setPlayersData={setPlayersData}
           />
