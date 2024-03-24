@@ -25,7 +25,7 @@ const TableHeader = styled.header`
   padding: 1.6rem 2.4rem;
 `;
 
-function ScoutTable({ playersData, setPlayersData, expChange }) {
+function ScoutTable({ expChange, players, setPlayers }) {
   return (
     <Table role="table">
       <TableHeader role="row">
@@ -35,13 +35,13 @@ function ScoutTable({ playersData, setPlayersData, expChange }) {
         <div>Изминение опыта</div>
         <div>Удалить строку</div>
       </TableHeader>
-      {playersData.map((player) => (
+      {players.map((player) => (
         <PlayerInfo
           key={player.timeNow}
           player={player}
-          playersData={playersData}
-          setPlayersData={setPlayersData}
+          players={players}
           expChange={expChange}
+          setPlayers={setPlayers}
         />
       ))}
     </Table>

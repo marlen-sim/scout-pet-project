@@ -8,33 +8,31 @@ import Button from "../ui/Button";
 import EmbtyTable from "../ui/EmtyTable";
 
 export default function Homepage() {
-  const [players, setPlayers] = useState(playerData);
-  const [playersData, setPlayersData] = useLocalStorageState(
-    playerData,
-    "playersData"
-  );
+  const [players, setPlayers] = useState([]);
+
+  console.log(players);
+
   const [expChange, setExpChange] = useState();
 
   function handleDeleteTAbleData() {
-    setPlayersData([]);
+    setPlayers([]);
   }
   return (
     <>
       <Form
         players={players}
         setPlayers={setPlayers}
-        setPlayersData={setPlayersData}
         setExpChange={setExpChange}
       />
-      {playersData.length > 0 ? (
+      {players.length > 0 ? (
         <>
           <span>
             <Button onClick={handleDeleteTAbleData}>Очитсить таблицу</Button>
           </span>
           <ScoutTable
+            players={players}
             expChange={expChange}
-            playersData={playersData}
-            setPlayersData={setPlayersData}
+            setPlayers={setPlayers}
           />
         </>
       ) : (

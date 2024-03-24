@@ -27,19 +27,14 @@ const StyledInput = styled.input`
 
 interface FormProps {
   players: [];
-  setPlayers: React.Dispatch<React.SetStateAction<object>>;
-  setPlayersData: React.Dispatch<React.SetStateAction<object>>;
+  setPlayers: React.Dispatch<React.SetStateAction<[]>>;
+  setExpChange: React.Dispatch<React.SetStateAction<number>>;
 }
 
-export default function Form({
-  players,
-  setPlayers,
-  setPlayersData,
-  setExpChange,
-}: FormProps) {
+export default function Form({ players, setPlayers, setExpChange }: FormProps) {
   const [nickname, setNickname] = useState("");
   const [heroExp, setExp] = useState(null);
-  const [savedNickname, setSavedNickname] = useState();
+  const [savedNickname, setSavedNickname] = useState("");
 
   const timeNow = new Date().toLocaleTimeString();
 
@@ -57,6 +52,7 @@ export default function Form({
 
     handleAddPlayer(player);
     setSavedNickname(nickname);
+
     setNickname("");
     setExp(null);
   }
@@ -64,13 +60,12 @@ export default function Form({
   interface playerProps {
     timeNow: string;
     nickname: string;
-    heroExp: number;
+    heroExp: number | null;
     coords: string;
   }
 
-  function handleAddPlayer(player: playerProps) {
-    setPlayers((players) => [...(players as []), player]);
-    setPlayersData((players) => [...(players as []), player]);
+  function handleAddPlayer(player: any) {
+    setPlayers((players) => [...players, player]);
   }
 
   useEffect(
@@ -78,14 +73,16 @@ export default function Form({
       const filteredPlayers = players.filter(
         (obj) => obj?.nickname === savedNickname
       );
-      if (filteredPlayers.length < 2) return;
+      if (filteredPlayers.length === 1) return;
       const heroExpChage =
-        filteredPlayers[filteredPlayers.length - 1]?.heroExp -
-        filteredPlayers[filteredPlayers.length - 2]?.heroExp;
+        filteredPlayers.at.length -
+        1?.heroExp -
+        filteredPlayers.at.length -
+        2?.heroExp;
 
       setExpChange(heroExpChage);
     },
-    [players, nickname]
+    [players, savedNickname]
   );
 
   return (

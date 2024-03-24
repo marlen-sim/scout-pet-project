@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import Button from "./Button";
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 
 const TableRow = styled.div`
   display: grid;
@@ -15,20 +15,13 @@ const TableRow = styled.div`
   }
 `;
 
-export default function PlayerInfo({
-  player,
-  playersData,
-  setPlayersData,
-  expChange,
-}) {
+export default function PlayerInfo({ player, expChange, setPlayers, players }) {
   function handleDeletePlayerInfo() {
-    const filteredData = playersData.filter(
+    const filteredData = players.filter(
       (item) => item.timeNow !== player.timeNow
     );
-    setPlayersData(filteredData);
+    setPlayers(filteredData);
   }
-
-  const expRef = useRef(expChange);
 
   return (
     <TableRow>
@@ -37,7 +30,7 @@ export default function PlayerInfo({
       </span>
       <span>{player.nickname}</span>
       <span>{player.heroExp}</span>
-      <span>{expRef.current}</span>
+      <span></span>
       <span>
         <Button onClick={handleDeletePlayerInfo}>X</Button>
       </span>
