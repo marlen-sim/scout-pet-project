@@ -29,26 +29,36 @@ interface FormProps {
   players: [];
   setPlayers: React.Dispatch<React.SetStateAction<[]>>;
   setExpChange: React.Dispatch<React.SetStateAction<number>>;
+  expChange?: number;
 }
 
-export default function Form({ players, setPlayers, setExpChange }: FormProps) {
+export default function Form({ players, setPlayers }: FormProps) {
   const [nickname, setNickname] = useState("");
   const [heroExp, setExp] = useState(null);
   const [savedNickname, setSavedNickname] = useState("");
 
   const timeNow = new Date().toLocaleTimeString();
 
-  const player = {
-    timeNow,
-    nickname,
-    heroExp,
-    coords: "",
-  };
-
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
     if (!nickname || !heroExp) return;
+
+    const filteredPlayers = players.filter((obj) => obj?.nickname === nickname);
+
+    let heroExpChange = null;
+    if (filteredPlayers.length > 0) {
+      heroExpChange =
+        heroExp - filteredPlayers[filteredPlayers.length - 1].heroExp;
+    }
+
+    const player = {
+      timeNow,
+      nickname,
+      heroExp,
+      heroExpChange,
+      coords: "",
+    };
 
     handleAddPlayer(player);
     setSavedNickname(nickname);
@@ -61,29 +71,13 @@ export default function Form({ players, setPlayers, setExpChange }: FormProps) {
     timeNow: string;
     nickname: string;
     heroExp: number | null;
+    heroExpChange: number | null;
     coords: string;
   }
 
   function handleAddPlayer(player: any) {
     setPlayers((players) => [...players, player]);
   }
-
-  useEffect(
-    function () {
-      const filteredPlayers = players.filter(
-        (obj) => obj?.nickname === savedNickname
-      );
-      if (filteredPlayers.length === 1) return;
-      const heroExpChage =
-        filteredPlayers.at.length -
-        1?.heroExp -
-        filteredPlayers.at.length -
-        2?.heroExp;
-
-      setExpChange(heroExpChage);
-    },
-    [players, savedNickname]
-  );
 
   return (
     <StyledForm className="form" onSubmit={handleSubmit}>

@@ -25,7 +25,7 @@ const TableHeader = styled.header`
   padding: 1.6rem 2.4rem;
 `;
 
-function ScoutTable({ expChange, players, setPlayers }) {
+function ScoutTable({ players, setPlayers }) {
   return (
     <Table role="table">
       <TableHeader role="row">
@@ -40,7 +40,6 @@ function ScoutTable({ expChange, players, setPlayers }) {
           key={player.timeNow}
           player={player}
           players={players}
-          expChange={expChange}
           setPlayers={setPlayers}
         />
       ))}
