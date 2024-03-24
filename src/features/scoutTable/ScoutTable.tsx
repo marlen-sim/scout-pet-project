@@ -27,23 +27,25 @@ const TableHeader = styled.header`
 
 function ScoutTable({ players, setPlayers }) {
   return (
-    <Table role="table">
-      <TableHeader role="row">
-        <div>Время</div>
-        <div>Ник</div>
-        <div>Опыт</div>
-        <div>Изминение опыта</div>
-        <div>Удалить строку</div>
-      </TableHeader>
-      {players.map((player) => (
-        <PlayerInfo
-          key={player.timeNow}
-          player={player}
-          players={players}
-          setPlayers={setPlayers}
-        />
-      ))}
-    </Table>
+    <>
+      <Table role="table">
+        <TableHeader role="row">
+          <div>Время</div>
+          <div>Ник</div>
+          <div>Опыт</div>
+          <div>Изменение опыта</div>
+          <div>Удалить строку</div>
+        </TableHeader>
+        {players.map((player) => (
+          <PlayerInfo
+            key={player.timeNow}
+            player={player}
+            players={players}
+            setPlayers={setPlayers}
+          />
+        ))}
+      </Table>
+    </>
   );
 }
 

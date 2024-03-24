@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import Button from "./Button";
+import { HiOutlineTrash } from "react-icons/hi2";
 
 const TableRow = styled.div`
   display: grid;
@@ -12,6 +13,11 @@ const TableRow = styled.div`
   &:not(:last-child) {
     border-bottom: 1px solid var(--color-gray-300);
   }
+`;
+
+const StyledSpan = styled.span`
+  font-weight: 600;
+  color: var(--color-emerald-700);
 `;
 
 export default function PlayerInfo({ player, setPlayers, players }) {
@@ -29,9 +35,16 @@ export default function PlayerInfo({ player, setPlayers, players }) {
       </span>
       <span>{player.nickname}</span>
       <span>{player.heroExp}</span>
-      <span>{player.heroExpChange}</span>
+      <StyledSpan>
+        {player.heroExpChange === null || player.heroExpChange === 0
+          ? ""
+          : `+ ${player.heroExpChange}`}
+      </StyledSpan>
+
       <span>
-        <Button onClick={handleDeletePlayerInfo}>X</Button>
+        <Button size="small" onClick={handleDeletePlayerInfo}>
+          <HiOutlineTrash />
+        </Button>
       </span>
     </TableRow>
   );

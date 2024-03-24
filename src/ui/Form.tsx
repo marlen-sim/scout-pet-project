@@ -2,6 +2,7 @@ import styled from "styled-components";
 import Heading from "./Heading";
 import Button from "./Button";
 import { useEffect, useState } from "react";
+import { subHours } from "date-fns";
 
 const StyledForm = styled.form`
   background-color: #52525b;
@@ -37,7 +38,7 @@ export default function Form({ players, setPlayers }: FormProps) {
   const [heroExp, setExp] = useState(null);
   const [savedNickname, setSavedNickname] = useState("");
 
-  const timeNow = new Date().toLocaleTimeString();
+  const timeNow = subHours(new Date(), 2).toLocaleTimeString();
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
