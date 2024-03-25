@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import Heading from "./Heading";
 import Button from "./Button";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { subHours } from "date-fns";
 
 const StyledForm = styled.form`
@@ -36,7 +36,6 @@ interface FormProps {
 export default function Form({ players, setPlayers }: FormProps) {
   const [nickname, setNickname] = useState("");
   const [heroExp, setExp] = useState(null);
-  const [savedNickname, setSavedNickname] = useState("");
 
   const timeNow = subHours(new Date(), 2).toLocaleTimeString();
 
@@ -49,8 +48,11 @@ export default function Form({ players, setPlayers }: FormProps) {
 
     let heroExpChange = null;
     if (filteredPlayers.length > 0) {
-      heroExpChange =
+      let tempHeroExpChange =
         heroExp - filteredPlayers[filteredPlayers.length - 1].heroExp;
+      tempHeroExpChange >= 0
+        ? (heroExpChange = tempHeroExpChange)
+        : heroExpChange;
     }
 
     const player = {
@@ -62,7 +64,6 @@ export default function Form({ players, setPlayers }: FormProps) {
     };
 
     handleAddPlayer(player);
-    setSavedNickname(nickname);
 
     setNickname("");
     setExp(null);
